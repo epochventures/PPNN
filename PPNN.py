@@ -135,8 +135,11 @@ def grad_hidden(act, target, grad_dict, w_dict, deltas_o):
 
 	delta = {}
 	#w_dict['hidden'].keys()[0]
-	for j in w_dict['hidden'][0]: 
-		
+	#for j in w_dict['hidden'][0]: 
+	for j in w_dict['hidden']: 
+
+
+		#print "j", j
 		sum_d = 0.0
 		for k in w_dict['output']:
 			sum_d += deltas_o[k] * w_dict['output'][k][j]
@@ -148,6 +151,8 @@ def grad_hidden(act, target, grad_dict, w_dict, deltas_o):
 
 		for i in w_dict['hidden'][0]:
 			#print j, i
+			#print delta[j]
+			
 			grad_dict['hidden'][j][i] += delta[j] * act['input'][i] 			
 		
 		
@@ -371,15 +376,19 @@ if __name__ == "__main__":
 	Nepochs = 100000
 	grad_tol = 0.001
 	error_tol = 0.0001
-	rate = 0.02
-	mom = 0.2
+	rate = 0.001
+	mom = 0.1
 	fraction_epoch = 0.10
 
 	min_epoch = fraction_epoch * Nepochs
 	batch_update = False # update after iteration
 
-	xor_train = build_xor_train(Npresentations, Nepochs)
 	w_dict = buildNN(Ninput, Nhidden, Noutput, Weight)
+	print w_dict
+	print "Press Enter..."
+	raw_input()
+	xor_train = build_xor_train(Npresentations, Nepochs)
+	
 	
 
 	w_init = deepcopy(w_dict)
